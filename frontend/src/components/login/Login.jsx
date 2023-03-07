@@ -27,6 +27,9 @@ const Login = () => {
     useEffect(() => {
 
         const handleKeyDown = (event) => {
+            if (event.keyCode === 13) {
+                login();
+            }
             if (event.keyCode === 32 && event.target.tagName !== 'INPUT') {
                 event.preventDefault(); // prevent the spacebar from scrolling the page
                 if (!listening) {
@@ -103,11 +106,6 @@ const Login = () => {
                         autoComplete="off"
                         value={password}
                         onChange={(e) => setPassword(e.target.value.replace(/\s+/g, ''))}
-                        onKeyPress={(event) => {
-                            if (event.key === 'Enter') {
-                                login();
-                            }
-                        }}
                     />
                     <label className="form-label" htmlFor="form2Example2">
                         Password
