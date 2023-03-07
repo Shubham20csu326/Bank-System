@@ -8,3 +8,7 @@ form {
     width: 25%;
     margin: 4rem auto;
 }
+
+input {
+    margin-bottom: 2rem;
+}

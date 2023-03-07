@@ -3,11 +3,14 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const authRoute = require('./routes/auth-route')
+require('dotenv').config()
 const app = express()
-const port = process.env.PORT || 8080
-const dbUsername = process.env.DB_USERNAME || 'Soumyadip'
-const dbPassword = process.env.DB_PASSWORD || '20csu214'
-const dbName = process.env.DB_NAME || 'Banking'
+
+
+const port = process.env.PORT
+const dbUsername = process.env.DB_USERNAME
+const dbPassword = process.env.DB_PASSWORD
+const dbName = process.env.DB_NAME
 const dbUrl = `mongodb+srv://${dbUsername}:${dbPassword}@cluster0.jm2zckm.mongodb.net/${dbName}?retryWrites=true&w=majority`
 mongoose.connect(dbUrl, {
 }).then(() => {

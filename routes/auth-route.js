@@ -32,11 +32,6 @@ router.post('/login', (req, res) => {
         }
     })
 })
-// router.get('/loginAuthorised/:email', (req, res) => {
-//     User.findOne({ email: req.params.email }).then((value) => {
-//         res.json({ success: true, message: "Data Fetched", logindata: value })
-//     })
-// })
 router.post('/register', (req, res) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         const data = new User({
@@ -52,6 +47,11 @@ router.post('/register', (req, res) => {
         }).catch(() => {
             res.json({ message: "All Fields Are Required", success: false })
         })
+    })
+})
+router.post('/getuser/:id', (req, res) => {
+    User.findById(req.params.id).then((value) => {
+        res.json({ success: true, value: value })
     })
 })
 router.get('/getUsers', (req, res) => {

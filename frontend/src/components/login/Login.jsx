@@ -31,7 +31,7 @@ const Login = () => {
                 login();
             }
             if (event.keyCode === 32 && event.target.tagName !== 'INPUT') {
-                event.preventDefault(); // prevent the spacebar from scrolling the page
+                event.preventDefault();
                 if (!listening) {
                     SpeechRecognition.startListening({ language: 'en-IN' });
                 } else {
@@ -48,6 +48,7 @@ const Login = () => {
     }, [listening]);
 
     const login = async () => {
+
         const data = {
             account: account,
             password: password.replace(/\s+/g, '')
@@ -77,54 +78,23 @@ const Login = () => {
             <h1>Banking Login</h1>
             <form autoComplete="off">
                 {/* Account input */}
-                <div className="form-outline mb-4">
-                    <input
-                        type="text"
-                        id="form2Example1"
-                        className="form-control"
-                        autoComplete="off"
+                <div class="form-group">
+                    {/* <label for="exampleInputPassword1">Account Number</label> */}
+                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Account Number" autoComplete="off"
                         value={account}
-                        onChange={(e) => setAccount(e.target.value)}
-
-                    />
-                    <label className="form-label" htmlFor="form2Example1">
-                        Account Number
-                    </label>
-
-                    <div className="form-notch">
-                        <div className="form-notch-leading" style={{ width: '9px' }} />
-                        <div className="form-notch-middle" style={{ width: '64.8px' }} />
-                        <div className="form-notch-trailing" />
-                    </div>
+                        onChange={(e) => setAccount(e.target.value)} />
                 </div>
-                {/* Password input */}
-                <div className="form-outline mb-4">
-                    <input
-                        type="password"
-                        id="form2Example2"
-                        className="form-control"
-                        autoComplete="off"
+                <div class="form-group">
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" autoComplete="off"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value.replace(/\s+/g, ''))}
-                    />
-                    <label className="form-label" htmlFor="form2Example2">
-                        Password
-                    </label>
-
-                    <div className="form-notch">
-                        <div className="form-notch-leading" style={{ width: '9px' }} />
-                        <div className="form-notch-middle" style={{ width: '64.8px' }} />
-                        <div className="form-notch-trailing" />
-                    </div>
+                        onChange={(e) => setPassword(e.target.value.replace(/\s+/g, ''))} />
                 </div>
-                {/* Submit button */}
                 <button type="button" className="btn btn-primary btn-block mb-4" onClick={login}>
                     Sign in
                 </button>
-                {/* Register buttons */}
                 <div className="text-center">
                     <button style={{ fontSize: '2rem' }} type="button" className="btn btn-link btn-floating mx-1">
-                        <i className="fa-solid fa-camera"></i>
+                        <i class="fa-brands fa-google-plus-g"></i>
                     </button>
                 </div>
             </form>
