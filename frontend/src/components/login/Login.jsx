@@ -1,35 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Login.css';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useState('');
     const [password, setPassword] = useState('');
+    const commands = [
+        {
+            command: 'account number is *',
+            callback: (accountNumber) => setAccount(accountNumber),
+        },
+        {
+            command: 'password is *',
+            callback: (password) => setPassword(password),
+        },
+    ];
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition,
+    } = useSpeechRecognition({ commands });
+    useEffect(() => {
 
-    const handleKeyPress = (event) => {
-        if (event.keyCode === 13) {
-            login();
-        }
-    };
+        const handleKeyDown = (event) => {
+            if (event.keyCode === 32 && event.target.tagName !== 'INPUT') {
+                event.preventDefault(); // prevent the spacebar from scrolling the page
+                if (!listening) {
+                    SpeechRecognition.startListening({ language: 'en-IN' });
+                } else {
+                    SpeechRecognition.stopListening();
+                }
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [listening]);
 
     const login = async () => {
         const data = {
-            account,
-            password,
-        };
-        try {
-            const response = await axios.post('http://localhost:8080/auth/login', data);
-            localStorage.setItem('token', response.data.token);
+            account: account,
+            password: password.replace(/\s+/g, '')
+        }
+        console.log(data)
+        const res = await axios.post('http://localhost:8080/auth/login', data);
+        if (res.data.success) {
+            localStorage.setItem('token', res.data.token);
+
             setAccount('');
             setPassword('');
             navigate('/user');
-        } catch (error) {
-            console.log(error);
         }
+        else {
+            setAccount('');
+            setPassword('');
+        }
+
     };
 
+
+    if (!browserSupportsSpeechRecognition) {
+        return <span>Browser doesn't support speech recognition.</span>;
+    }
     return (
         <section>
             <h1>Banking Login</h1>
@@ -43,6 +82,7 @@ const Login = () => {
                         autoComplete="off"
                         value={account}
                         onChange={(e) => setAccount(e.target.value)}
+
                     />
                     <label className="form-label" htmlFor="form2Example1">
                         Account Number
@@ -62,8 +102,12 @@ const Login = () => {
                         className="form-control"
                         autoComplete="off"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        onKeyDown={handleKeyPress}
+                        onChange={(e) => setPassword(e.target.value.replace(/\s+/g, ''))}
+                        onKeyPress={(event) => {
+                            if (event.key === 'Enter') {
+                                login();
+                            }
+                        }}
                     />
                     <label className="form-label" htmlFor="form2Example2">
                         Password
@@ -86,6 +130,8 @@ const Login = () => {
                     </button>
                 </div>
             </form>
+            <p>Microphone: {listening ? <i class="fa-solid fa-microphone"></i> : <i class="fa-solid fa-microphone-slash"></i>}</p>
+            <p>{transcript}</p>
         </section>
     );
 };
