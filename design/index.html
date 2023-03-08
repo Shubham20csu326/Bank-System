@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Banking</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile {
+            margin: 1rem;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: rgb(0 0 0 / 2%) 0px 1px 3px 0px, rgb(27 31 35 / 15%) 0px 0px 0px 1px;
+            border-radius: 20px;
+        }
+
+        .profile h2 {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .profile p {
+            font-size: 16px;
+            color: #999;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .bank-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .balance {
+            margin: 1rem;
+            box-shadow: rgb(0 0 0 / 2%) 0px 1px 3px 0px, rgb(27 31 35 / 15%) 0px 0px 0px 1px;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            width: 250px;
+        }
+
+        .balance h3 {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .balance p {
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .transaction-container {
+            margin: 1rem;
+            box-shadow: rgb(0 0 0 / 2%) 0px 1px 3px 0px, rgb(27 31 35 / 15%) 0px 0px 0px 1px;
+            border-radius: 20px;
+            background-color: #fff;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .transaction-container h3 {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .transaction-container p {
+            font-size: 16px;
+            color: #999;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        p#balance {
+            font-size: 2.8rem;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="profile">
+        <h2>John Doe</h2>
+        <p>Account Number: 1234567890</p>
+        <p>Address: 123 Main St, Anytown USA</p>
+    </section>
+
+    <div class="bank-container">
+        <section class="balance">
+            <h3>Balance</h3>
+            <p id="balance">$500</p>
+        </section>
+        <section class="transaction-container">
+
+            <!-- Card Css -->
+        </section>
+
+    </div>
+    <div class="bank-container">
+        <section class="transaction-container">
+            <h3>Withdraw</h3>
+            <form>
+                <div class="form-group">
+                    <label for="withdraw-amount">Amount:</label>
+                    <input type="number" class="form-control" id="withdraw-amount">
+                </div>
+                <button type="submit" class="btn btn-primary">Withdraw</button>
+            </form>
+        </section>
+        <section class="transaction-container">
+            <h3>Deposit</h3>
+            <form>
+                <div class="form-group">
+                    <label for="deposit-amount">Amount:</label>
+                    <input type="number" class="form-control" id="deposit-amount">
+                </div>
+                <button type="submit" class="btn btn-primary">Deposit</button>
+            </form>
+        </section>
+
+    </div>
+</body>
+
+</html>

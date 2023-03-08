@@ -11,13 +11,33 @@ const Login = () => {
     const commands = [
         {
             command: 'account number is *',
-            callback: (accountNumber) => setAccount(accountNumber),
+            callback: (accountNumber) => {
+                setAccount(accountNumber)
+                speak(`Account Number is ${accountNumber}`)
+            },
         },
         {
             command: 'password is *',
-            callback: (password) => setPassword(password),
+            callback: (password) => {
+                setPassword(password)
+                speak(`Password is ${password}`)
+            },
+        },
+        {
+            command: 'reset',
+            callback: () => {
+                resetTranscript();
+                setAccount('');
+                setPassword('');
+                speak("Data has been reset. Please enter your account number and password again.");
+            },
         },
     ];
+    const speak = (message) => {
+        const speechSynthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(message);
+        speechSynthesis.speak(utterance);
+    }
     const {
         transcript,
         listening,
@@ -47,13 +67,14 @@ const Login = () => {
         };
     }, [listening]);
 
-    const login = async () => {
-
+    const login = async (e) => {
+        if (e) {
+            e.preventDefault()
+        }
         const data = {
             account: account,
             password: password.replace(/\s+/g, '')
         }
-        console.log(data)
         const res = await axios.post('http://localhost:8080/auth/login', data);
         if (res.data.success) {
             localStorage.setItem('token', res.data.token);
@@ -76,7 +97,7 @@ const Login = () => {
     return (
         <section>
             <h1>Banking Login</h1>
-            <form autoComplete="off">
+            <form autoComplete="off" onSubmit={login}>
                 {/* Account input */}
                 <div class="form-group">
                     {/* <label for="exampleInputPassword1">Account Number</label> */}
@@ -89,7 +110,7 @@ const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value.replace(/\s+/g, ''))} />
                 </div>
-                <button type="button" className="btn btn-primary btn-block mb-4" onClick={login}>
+                <button type="submit" className="btn btn-primary btn-block mb-4" >
                     Sign in
                 </button>
                 <div className="text-center">
