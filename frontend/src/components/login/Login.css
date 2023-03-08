@@ -9,6 +9,12 @@ form {
     margin: 4rem auto;
 }
 
+.microphone-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
 input {
     margin-bottom: 2rem;
 }

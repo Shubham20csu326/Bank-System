@@ -6,8 +6,10 @@ import { BsFillMicMuteFill } from 'react-icons/bs';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import numberToWords from 'number-to-words';
 import jwt_decode from 'jwt-decode';
-
-const UserPage = () => {
+import Header from '../header/Header'
+import { useNavigate } from 'react-router-dom';
+const UserPage = (props) => {
+    const navigate = useNavigate();
     const [profile, setProfile] = useState([]);
     const [withdraw, setWithdraw] = useState(0);
     const [deposit, setDeposit] = useState(0);
@@ -100,6 +102,12 @@ const UserPage = () => {
             callback: () => {
                 speak(`Your balance is ${balance}`)
             },
+        },
+        {
+            command: 'logout',
+            callback: () => {
+
+            },
         }
     ];
     const speak = (message) => {
@@ -131,7 +139,12 @@ const UserPage = () => {
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [listening]);
+    }, [listening])
+    const logout = () => {
+        console.log("logout")
+        localStorage.clear();
+        navigate("/")
+    };
     return (
         <>
             {profile.length === 0 ? "Loading" :

@@ -1,13 +1,16 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import UserPage from '../userpage/UserPage';
 
 function Header() {
     const navigate = useNavigate();
     const logout = () => {
+        console.log("logout")
         localStorage.clear();
         navigate("/")
     }
     return (
+
         <>
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg navbar-light bg-light">

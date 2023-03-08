@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Login.css';
+import { AiOutlineAudio } from 'react-icons/ai';
+import { BsFillMicMuteFill } from 'react-icons/bs';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +23,12 @@ const Login = () => {
             callback: (password) => {
                 setPassword(password)
                 speak(`Password is ${password}`)
+            },
+        },
+        {
+            command: 'sign in',
+            callback: () => {
+                login()
             },
         },
         {
@@ -96,6 +104,9 @@ const Login = () => {
     }
     return (
         <section>
+            <div className="microphone-btn" >
+                {listening ? <AiOutlineAudio size={30} /> : <BsFillMicMuteFill size={30} />}
+            </div>
             <h1>Banking Login</h1>
             <form autoComplete="off" onSubmit={login}>
                 {/* Account input */}
@@ -119,7 +130,6 @@ const Login = () => {
                     </button>
                 </div>
             </form>
-            <p>Microphone: {listening ? <i class="fa-solid fa-microphone"></i> : <i class="fa-solid fa-microphone-slash"></i>}</p>
             <p>{transcript}</p>
         </section>
     );
