@@ -52,6 +52,16 @@ router.post('/login', (req, res) => {
         }
     })
 })
+router.put('/editbalance/:id', (req, res) => {
+    var data = {
+        balance: req.body.balance
+    }
+    User.findByIdAndUpdate(req.params.id, { $set: data }).then(() => {
+        res.json({ success: true, message: "Balance Updated" })
+    }).catch((err) => {
+        console.log(err)
+    })
+})
 router.post('/register', (req, res) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         const data = new User({
