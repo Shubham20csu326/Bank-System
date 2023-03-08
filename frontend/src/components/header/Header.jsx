@@ -1,8 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-function header() {
-    const navigate = useNavigate()
+function Header() {
+    const navigate = useNavigate();
     const logout = () => {
         localStorage.clear();
         navigate("/")
@@ -32,7 +32,7 @@ function header() {
                         {/* Left links */}
                         <div className="d-flex align-items-center">
 
-                            <a onClick={logout} className="btn btn-dark px-3" role="button"><i style={{ color: 'white' }} class="fa-solid fa-right-from-bracket"></i></a>
+                            <a onClick={logout} className="btn btn-dark px-3" role="button"><i style={{ color: 'white' }} className="fa-solid fa-right-from-bracket"></i></a>
                         </div>
                     </div>
                     {/* Collapsible wrapper */}
@@ -44,4 +44,4 @@ function header() {
     )
 }
 
-export default header
+export default Header

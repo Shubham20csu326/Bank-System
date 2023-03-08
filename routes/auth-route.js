@@ -6,6 +6,26 @@ var ObjectId = require('mongoose').Types.ObjectId;
 router.get('/ok', (req, res) => {
     res.json({ message: "All Working" })
 })
+function generateRandomNumber() {
+    let number = ''
+    for (let i = 0; i < 16; i++) {
+        number += Math.floor(Math.random() * 10).toString()
+        if (i === 3 || i === 7 || i === 11) {
+            number += '-'
+        }
+    }
+    return number
+}
+// router.post('/insertMany', (req, res) => {
+//     var data = req.body;
+//     console.log(data)
+//     User.insertMany(data).then(() => {
+//         res.json({ success: true, message: "Data Inserted" })
+//     }).catch((err) => {
+//         console.log(err)
+//         res.json({ success: false, message: "Data cannot be inserted" })
+//     })
+// })
 router.post('/login', (req, res) => {
     User.find({ account: req.body.account }).then((value) => {
         if (value.length < 1) {
@@ -39,7 +59,8 @@ router.post('/register', (req, res) => {
             phone: req.body.phone,
             password: hash,
             account: req.body.account,
-            balance: req.body.balance
+            balance: req.body.balance,
+            card: generateRandomNumber()
         })
 
         data.save().then(() => {

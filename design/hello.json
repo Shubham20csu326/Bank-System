@@ -1,0 +1,72 @@
+[
+    {
+      "name": "John Smith",
+      "phone": "555-1234",
+      "account": 12345678,
+      "password": "mypassword1",
+      "balance": 1000
+    },
+    {
+      "name": "Jane Doe",
+      "phone": "555-5678",
+      "account": 87654321,
+      "password": "mypassword2",
+      "balance": 500
+    },
+    {
+      "name": "Bob Johnson",
+      "phone": "555-9876",
+      "account": 65432198,
+      "password": "mypassword3",
+      "balance": 750
+    },
+    {
+      "name": "Sarah Williams",
+      "phone": "555-4321",
+      "account": 13579864,
+      "password": "mypassword4",
+      "balance": 1500
+    },
+    {
+      "name": "Michael Lee",
+      "phone": "555-8765",
+      "account": 24681357,
+      "password": "mypassword5",
+      "balance": 2000
+    },
+    {
+      "name": "Emily Davis",
+      "phone": "555-2468",
+      "account": 97531864,
+      "password": "mypassword6",
+      "balance": 1250
+    },
+    {
+      "name": "David Martinez",
+      "phone": "555-3698",
+      "account": 74185296,
+      "password": "mypassword7",
+      "balance": 800
+    },
+    {
+      "name": "Michelle Kim",
+      "phone": "555-7854",
+      "account": 36985214,
+      "password": "mypassword8",
+      "balance": 1750
+    },
+    {
+      "name": "Steven Adams",
+      "phone": "555-9517",
+      "account": 25814763,
+      "password": "mypassword9",
+      "balance": 900
+    },
+    {
+      "name": "Laura Brown",
+      "phone": "555-1746",
+      "account": 96385274,
+      "password": "mypassword10",
+      "balance": 1100
+    }
+  ]

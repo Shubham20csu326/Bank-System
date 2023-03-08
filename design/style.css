@@ -1,89 +1,195 @@
-.bank-container {
-    margin: 50px auto;
-    width: 400px;
-    background-color: #f7f7f7;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
 
-h1 {
-    font-size: 36px;
-    margin-bottom: 30px;
-}
-
-.balance-container {
-    border: 2px solid #ddd;
-    padding: 20px;
-    margin-bottom: 30px;
-}
-
-.balance-container p {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.balance-container h2 {
-    font-size: 48px;
+body {
     margin: 0;
+    padding: 0;
+    font-family: 'Maven Pro', sans-serif;
+}
+
+/* .main_div {
+    display: grid;
+} */
+
+.center_div {
+    width: 300px;
+    height: 180px;
+    border-radius: 16px;
+    background: linear-gradient(to right top, #52b6fe, #6154fe);
+    padding: 30px;
+    position: relative;
+    box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+        0 12.5px 10px rgba(0, 0, 0, 0.06),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+        0 100px 80px rgba(0, 0, 0, 0.12);
+}
+
+.center_div::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(20% 0%, 100% 0, 100% 20%, 100% 100%, 84% 70%, 46% 59%, 35% 21%, 0 0);
+    border-radius: 16px;
+    background: rgb(1, 4, 64);
+    background: linear-gradient(90deg, rgba(1, 4, 64, 1) 4%, rgba(20, 1, 130, 1) 24%, rgba(39, 5, 185, 0.9535962877030162) 51%, rgba(0, 104, 255, 1) 75%, rgba(5, 145, 184, 1) 93%);
+    z-index: 1;
+    opacity: 0.4;
+}
+
+.center_div::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(20% 0%, 100% 0, 100% 20%, 100% 100%, 84% 70%, 46% 59%, 35% 21%, 0 0);
+    border-radius: 16px;
+    background-image: url('LEV6bP7.png');
+    background-size: cover;
+    z-index: 1;
+    opacity: 0.4;
+}
+
+.center_div .top_div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    z-index: 2;
+}
+
+.center_div .top_div h2 {
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-weight: 300;
+    z-index: 2;
+}
+
+.center_div .top_div h1 {
+    font-size: 30px;
+    text-align: right;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.center_div .bottom_div {
+    position: absolute;
+    bottom: 20px;
+    z-index: 2;
+}
+
+.center_div .bottom_div h2 {
+    font-size: 15px;
+    font-weight: 300;
+    text-transform: capitalize;
+    color: #dfe6e9;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.center_div .bottom_div p {
+    color: #fff;
+}
+
+.profile {
+    margin: 1rem;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: rgb(0 0 0 / 2%) 0px 1px 3px 0px, rgb(27 31 35 / 15%) 0px 0px 0px 1px;
+    border-radius: 20px;
+}
+
+.profile h2 {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.profile p {
+    font-size: 16px;
+    color: #999;
+    margin: 0;
+    line-height: 1.5;
+}
+
+img {
+    width: 14%;
+    vertical-align: middle;
+    border-style: none;
+    float: right;
+}
+
+.bank-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 2rem;
+}
+
+.balance {
+    box-shadow: rgb(0 0 0 / 2%) 0px 1px 3px 0px, rgb(27 31 35 / 15%) 0px 0px 0px 1px;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    width: 400px;
+}
+
+.balance h3 {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.balance p {
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .transaction-container {
-    border: 2px solid #ddd;
+    margin: 1rem;
+
+    box-shadow: rgb(0 0 0 / 2%) 0px 1px 3px 0px, rgb(27 31 35 / 15%) 0px 0px 0px 1px;
+    border-radius: 20px;
+    background-color: #fff;
     padding: 20px;
+    flex: 1;
 }
 
 .transaction-container h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    font-size: 18px;
-    margin-bottom: 5px;
-    display: block;
-}
-
-input[type="number"],
-select {
-    padding: 10px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: none;
-    background-color: #f5f5f5;
-    width: 100%;
-    box-sizing: border-box;
     margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
 }
 
-button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-button[type="submit"]:hover {
-    background-color: #0062cc;
+.transaction-container p {
+    font-size: 16px;
+    color: #999;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .btn-primary {
     background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
+    border-color: #007bff;
 }
 
 .btn-primary:hover {
-    background-color: #0062cc;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+p#balance {
+    font-size: 2.8rem;
+    color: green;
 }
