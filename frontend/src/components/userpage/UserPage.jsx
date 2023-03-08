@@ -104,7 +104,7 @@ const UserPage = () => {
                             <section className="balance">
                                 <h3>Balance</h3>
                                 <p id="balance">Rs {balance}</p>
-                                {/* <p id="capital">{numberToWords.toWords(balance)} Rupees</p> */}
+                                <p id="capital">{numberToWords.toWords(balance)} Rupees</p>
                             </section>
                             <div className="center_div">
                                 <div className="top_div">
@@ -115,7 +115,6 @@ const UserPage = () => {
                                 <div className="bottom_div">
                                     <h2>{profile[0].name}</h2>
                                     <p>{profile[0].card.replace(/-/g, "  -  ")}</p>
-                                    {/* <p>{profile[0].card.replace(/-/g, "  -  ")}</p> */}
                                 </div>
                             </div>
                         </div>
