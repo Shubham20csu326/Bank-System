@@ -56,16 +56,92 @@ const UserPage = () => {
             console.log('Amount not sufficient or incorrect amount');
             setWithdraw(0);
         }
-    };
+    }
+    const commands = [
+        {
+            command: 'reset',
+            callback: () => {
+                setWithdraw(0)
+                setDeposit(0)
+                resetTranscript();
+                speak("Data has been reset. ");
+            },
+        },
+        {
+            command: 'withdraw *',
+            callback: (amount) => {
+                setWithdraw(amount)
+                speak(`Amount to be withdraw is ${amount}`)
+            },
+        },
+        {
+            command: 'okay withdraw',
+            callback: () => {
+                withdrawbutton()
+                speak(`Amount withdraw`)
+            },
+        },
+        {
+            command: 'deposit *',
+            callback: (amount) => {
+                setDeposit(amount)
+                speak(`Amount to be deposit is ${amount}`)
+            },
+        },
+        {
+            command: 'okay deposit',
+            callback: () => {
+                depositbutton()
+                speak(`Amount deposited`)
+            },
+        },
+        {
+            command: '* balance',
+            callback: () => {
+                speak(`Your balance is ${balance}`)
+            },
+        }
+    ];
+    const speak = (message) => {
+        const speechSynthesis = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(message);
+        speechSynthesis.speak(utterance);
+    }
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition,
+    } = useSpeechRecognition({ commands });
+    useEffect(() => {
+
+        const handleKeyDown = (event) => {
+            if (event.keyCode === 32 && event.target.tagName !== 'INPUT') {
+                event.preventDefault();
+                if (!listening) {
+                    SpeechRecognition.startListening({ language: 'en-IN' });
+                } else {
+                    SpeechRecognition.stopListening();
+                }
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [listening]);
     return (
         <>
             {profile.length === 0 ? "Loading" :
 
 
                 <div className="container">
-                    {/* <div className="microphone-btn" >
+
+                    <div className="microphone-btn" >
                         {listening ? <AiOutlineAudio size={30} /> : <BsFillMicMuteFill size={30} />}
-                    </div> */}
+                    </div>
                     <div className="row">
                         <div className="col-md-8">
                             <section className="profile">
@@ -119,7 +195,9 @@ const UserPage = () => {
                             </div>
                         </div>
                     </div>
+                    <p class="text-center">{transcript}</p>
                 </div>
+
             }
 
         </>
