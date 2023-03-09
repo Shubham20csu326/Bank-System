@@ -214,8 +214,8 @@ const UserPage = () => {
                             <section className="profile">
                                 <h2>Transfer</h2>
                                 <div className="input-area">
-                                    <input type="text" className="form-control" placeholder="Account Number" value={reciever} onChange={(e) => setReciever(e.target.value)} />
-                                    <input type="number" className="form-control" min={0} value={amount} onChange={(e) => setAmount(e.target.value)} />
+                                    <input type="text" className="form-control" id="user" placeholder="Account Number" value={reciever} onChange={(e) => setReciever(e.target.value)} />
+                                    <input type="number" className="form-control" id="user" min={0} value={amount} onChange={(e) => setAmount(e.target.value)} />
                                 </div>
                                 <button type="button" className="btn btn-primary" onClick={tranferbutton}>Transfer</button>
                             </section>
@@ -223,7 +223,7 @@ const UserPage = () => {
                                 <div className="col-md-6">
                                     <section className="transaction-container">
                                         <h3>Withdraw</h3>
-                                        <form>
+                                        <form id="user">
                                             <div className="form-group">
                                                 <label htmlFor="withdraw-amount">Amount:</label>
                                                 <input type="number" className="form-control" id="amount" min={0} value={withdraw} onChange={(e) => setWithdraw(e.target.value)} />
@@ -235,7 +235,7 @@ const UserPage = () => {
                                 <div className="col-md-6">
                                     <section className="transaction-container">
                                         <h3>Deposit</h3>
-                                        <form>
+                                        <form id="user">
                                             <div className="form-group">
                                                 <label htmlFor="deposit-amount">Amount:</label>
                                                 <input type="number" className="form-control" id="amount" min={0} value={deposit} onChange={(e) => setDeposit(e.target.value)} />

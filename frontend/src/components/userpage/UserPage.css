@@ -147,7 +147,7 @@ img#card {
     justify-content: space-evenly;
 }
 
-input.form-control {
+input.form-control#user {
     width: 40%;
 }
 
@@ -155,7 +155,7 @@ input.form-control#amount {
     width: 100%;
 }
 
-form {
+form#user {
     width: 50%;
     margin: 1rem auto;
 }
