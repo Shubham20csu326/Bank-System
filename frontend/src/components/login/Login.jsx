@@ -5,8 +5,11 @@ import { AiOutlineAudio } from 'react-icons/ai';
 import { BsFillMicMuteFill } from 'react-icons/bs';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { useNavigate } from 'react-router-dom';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
+import jwt_decode from 'jwt-decode';
 const Login = () => {
+
     const navigate = useNavigate();
     const [account, setAccount] = useState('');
     const [password, setPassword] = useState('');
@@ -53,7 +56,6 @@ const Login = () => {
         browserSupportsSpeechRecognition,
     } = useSpeechRecognition({ commands });
     useEffect(() => {
-
         const handleKeyDown = (event) => {
             if (event.keyCode === 13) {
                 login();
@@ -97,10 +99,24 @@ const Login = () => {
         }
 
     };
-
-
     if (!browserSupportsSpeechRecognition) {
         return <span>Browser doesn't support speech recognition.</span>;
+    }
+    const googleAuth = async (value) => {
+        var data = {
+            "email": value
+        }
+        console.log(data)
+        let res = await axios.post('http://localhost:8080/auth/checkemail', data)
+        if (res.data.success) {
+            console.log(res.data.message)
+            localStorage.setItem('token', res.data.token);
+            navigate('/user')
+
+        }
+        else {
+            console.log(res.data.message)
+        }
     }
     return (
         <section>
@@ -125,13 +141,23 @@ const Login = () => {
                     Sign in
                 </button>
                 <div className="text-center">
-                    <button style={{ fontSize: '2rem' }} type="button" className="btn btn-link btn-floating mx-1">
-                        <i class="fa-brands fa-google-plus-g"></i>
-                    </button>
+
+                    <GoogleOAuthProvider clientId="873940242342-bs7kjgprr3ctnq1s4pgqjeemvm10t6n7.apps.googleusercontent.com">
+                        <GoogleLogin
+                            onSuccess={credentialResponse => {
+                                var data = jwt_decode(credentialResponse.credential);
+                                googleAuth(data.email);
+                            }}
+                            onError={() => {
+                                console.log('Login Failed');
+                            }}
+                        />
+                    </GoogleOAuthProvider>
+
                 </div>
             </form>
             <p>{transcript}</p>
-        </section>
+        </section >
     );
 };
 

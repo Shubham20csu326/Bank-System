@@ -112,5 +112,22 @@ router.post('/transaction', async (req, res) => {
         res.json({ success: false, message: error.message });
     }
 });
-
+router.post('/checkemail', (req, res) => {
+    const email = req.body.email;
+    User.findOne({ email: email }).then((user) => {
+        if (user) {
+            const payload = {
+                userId: user._id,
+                userName: user.name,
+                userPhone: user.phone,
+                userAccount: user.account
+            }
+            const token = jwt.sign(payload, "webBatch")
+            res.json({ success: true, message: "Email Found", token: token })
+        }
+        else {
+            res.json({ success: false, message: "Email Not Exist Or Found" })
+        }
+    })
+});
 module.exports = router

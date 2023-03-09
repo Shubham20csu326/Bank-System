@@ -117,7 +117,7 @@ const UserPage = () => {
             },
         },
         {
-            command: 'transfer * to *',
+            command: 'transfer rupees * to *',
             callback: (amount, account) => {
                 account = account.replace(/\s+/g, '');
                 if (amount > balance) {
