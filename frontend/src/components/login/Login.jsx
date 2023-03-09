@@ -126,21 +126,22 @@ const Login = () => {
             <h1>Banking Login</h1>
             <form autoComplete="off" onSubmit={login}>
                 {/* Account input */}
-                <div class="form-group">
+                <div className="form-group">
                     {/* <label for="exampleInputPassword1">Account Number</label> */}
-                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Account Number" autoComplete="off"
+                    <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Account Number" autoComplete="off"
                         value={account}
                         onChange={(e) => setAccount(e.target.value)} />
                 </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" autoComplete="off"
+                <div className="form-group">
+                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" autoComplete="off"
                         value={password}
                         onChange={(e) => setPassword(e.target.value.replace(/\s+/g, ''))} />
                 </div>
                 <button type="submit" className="btn btn-primary btn-block mb-4" >
                     Sign in
                 </button>
-                <div className="text-center">
+                <h5>OR</h5>
+                <div className="text-center" style={{ display: 'flex', justifyContent: 'center' }}>
 
                     <GoogleOAuthProvider clientId="873940242342-bs7kjgprr3ctnq1s4pgqjeemvm10t6n7.apps.googleusercontent.com">
                         <GoogleLogin

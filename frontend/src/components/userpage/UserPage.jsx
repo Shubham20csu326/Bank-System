@@ -265,7 +265,7 @@ const UserPage = () => {
                             </div>
                         </div>
                     </div>
-                    <p class="text-center">{transcript}</p>
+                    <p className="text-center">{transcript}</p>
                 </div>
 
             }
