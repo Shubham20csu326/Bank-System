@@ -16,16 +16,6 @@ function generateRandomNumber() {
     }
     return number
 }
-// router.post('/insertMany', (req, res) => {
-//     var data = req.body;
-//     console.log(data)
-//     User.insertMany(data).then(() => {
-//         res.json({ success: true, message: "Data Inserted" })
-//     }).catch((err) => {
-//         console.log(err)
-//         res.json({ success: false, message: "Data cannot be inserted" })
-//     })
-// })
 router.post('/login', (req, res) => {
     User.find({ account: req.body.account }).then((value) => {
         if (value.length < 1) {
@@ -92,5 +82,35 @@ router.get('/getUsers', (req, res) => {
         res.json({ message: "No Data Fetched For Details" })
     })
 })
+router.post('/transaction', async (req, res) => {
+    const senderAccount = req.body.senderAccount;
+    const recipientAccount = req.body.recipientAccount.replace(/\s+/g, '');
+    const amount = parseInt(req.body.amount);
+
+    try {
+        const sender = await User.findOne({ account: senderAccount });
+        const recipient = await User.findOne({ account: recipientAccount });
+
+        if (!sender || !recipient) {
+            res.json({ success: false, message: "Account Not Found Transaction Not Done" });
+            return;
+        }
+
+        if (sender.balance < amount) {
+            res.json({ success: false, message: "Insufficient balance" });
+            return;
+        }
+
+        sender.balance -= amount;
+        recipient.balance += amount;
+
+        await sender.save();
+        await recipient.save();
+
+        res.json({ success: true, message: "Transaction Done" });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+});
 
 module.exports = router

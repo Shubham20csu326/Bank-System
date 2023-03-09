@@ -6,15 +6,17 @@ import { BsFillMicMuteFill } from 'react-icons/bs';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import numberToWords from 'number-to-words';
 import jwt_decode from 'jwt-decode';
-import Header from '../header/Header'
 import { useNavigate } from 'react-router-dom';
-const UserPage = (props) => {
+const UserPage = () => {
     const navigate = useNavigate();
     const [profile, setProfile] = useState([]);
     const [withdraw, setWithdraw] = useState(0);
     const [deposit, setDeposit] = useState(0);
     const [balance, setBalance] = useState(0);
     const [id, setId] = useState('');
+    const [sender, setSender] = useState("")
+    const [reciever, setReciever] = useState("")
+    const [amount, setAmount] = useState(0);
 
     const loadProfile = async () => {
         const token = localStorage.getItem('token');
@@ -23,6 +25,7 @@ const UserPage = (props) => {
         setProfile([res.data.value])
         setBalance(res.data.value.balance)
         setId(res.data.value._id)
+        setSender(res.data.value.account)
     };
 
     useEffect(() => {
@@ -65,6 +68,8 @@ const UserPage = (props) => {
             callback: () => {
                 setWithdraw(0)
                 setDeposit(0)
+                setAmount(0);
+                setReciever("");
                 resetTranscript();
                 speak("Data has been reset. ");
             },
@@ -106,9 +111,36 @@ const UserPage = (props) => {
         {
             command: 'logout',
             callback: () => {
+                console.log("logout")
+                localStorage.clear();
+                navigate("/")
+            },
+        },
+        {
+            command: 'transfer * to *',
+            callback: (amount, account) => {
+                account = account.replace(/\s+/g, '');
+                if (amount > balance) {
+                    speak("Insufficient Balance")
+                    setAmount(0);
+                    setReciever("");
+                }
+                else {
+                    setAmount(amount);
+                    setReciever(account);
+                    speak(`Are you sure you want to transfer ${amount} to account ${account}`);
+                }
 
             },
-        }
+        },
+        {
+            command: 'okay transfer',
+            callback: () => {
+                console.log("t")
+                tranferbutton()
+                speak(`Amount Transferred`)
+            },
+        },
     ];
     const speak = (message) => {
         const speechSynthesis = window.speechSynthesis;
@@ -140,11 +172,28 @@ const UserPage = (props) => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [listening])
-    const logout = () => {
-        console.log("logout")
-        localStorage.clear();
-        navigate("/")
-    };
+    const tranferbutton = async () => {
+        var data = {
+            "senderAccount": sender,
+            "recipientAccount": reciever,
+            "amount": amount
+        }
+        let res = await axios.post('http://localhost:8080/auth/transaction', data)
+        if (res.data.success) {
+            setSender("")
+            setReciever("")
+            setAmount(0)
+            console.log(res.data.message)
+            let d = await axios.post('http://localhost:8080/auth/getuser/' + id);
+            setBalance(d.data.value.balance)
+        }
+        else {
+            setSender("")
+            setReciever("")
+            setAmount(0)
+            console.log(res.data.message)
+        }
+    }
     return (
         <>
             {profile.length === 0 ? "Loading" :
@@ -162,6 +211,14 @@ const UserPage = (props) => {
                                 <p>Account Number: {profile[0].account}</p>
                                 <p>Phone: {profile[0].phone}</p>
                             </section>
+                            <section className="profile">
+                                <h2>Transfer</h2>
+                                <div className="input-area">
+                                    <input type="text" className="form-control" placeholder="Account Number" value={reciever} onChange={(e) => setReciever(e.target.value)} />
+                                    <input type="number" className="form-control" min={0} value={amount} onChange={(e) => setAmount(e.target.value)} />
+                                </div>
+                                <button type="button" className="btn btn-primary" onClick={tranferbutton}>Transfer</button>
+                            </section>
                             <div className="row">
                                 <div className="col-md-6">
                                     <section className="transaction-container">
@@ -169,7 +226,7 @@ const UserPage = (props) => {
                                         <form>
                                             <div className="form-group">
                                                 <label htmlFor="withdraw-amount">Amount:</label>
-                                                <input type="number" className="form-control" id="withdraw-amount" min={0} value={withdraw} onChange={(e) => setWithdraw(e.target.value)} />
+                                                <input type="number" className="form-control" id="amount" min={0} value={withdraw} onChange={(e) => setWithdraw(e.target.value)} />
                                             </div>
                                             <button type="button" onClick={withdrawbutton} className="btn btn-primary">Withdraw</button>
                                         </form>
@@ -181,7 +238,7 @@ const UserPage = (props) => {
                                         <form>
                                             <div className="form-group">
                                                 <label htmlFor="deposit-amount">Amount:</label>
-                                                <input type="number" className="form-control" id="deposit-amount" min={0} value={deposit} onChange={(e) => setDeposit(e.target.value)} />
+                                                <input type="number" className="form-control" id="amount" min={0} value={deposit} onChange={(e) => setDeposit(e.target.value)} />
                                             </div>
                                             <button type="button" onClick={depositbutton} className="btn btn-primary">Deposit</button>
                                         </form>
