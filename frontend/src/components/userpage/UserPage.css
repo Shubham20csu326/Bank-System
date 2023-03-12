@@ -4,91 +4,61 @@ section {
     margin-top: 1rem;
 }
 
-.center_div {
-    width: calc(300px + 120px);
-    height: calc(180px + 72px);
-    border-radius: 16px;
-    background: linear-gradient(to right top, #52b6fe, #6154fe);
-    padding: 30px;
+.container1 {
+    margin: 0 auto;
     position: relative;
-    box-shadow: 0 2.8px 2.2px rgb(0 0 0 / 3%), 0 6.7px 5.3px rgb(0 0 0 / 5%), 0 12.5px 10px rgb(0 0 0 / 6%), 0 22.3px 17.9px rgb(0 0 0 / 7%), 0 41.8px 33.4px rgb(0 0 0 / 9%), 0 100px 80px rgb(0 0 0 / 12%);
-}
-
-
-.center_div::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    clip-path: polygon(20% 0%, 100% 0, 100% 20%, 100% 100%, 84% 70%, 46% 59%, 35% 21%, 0 0);
-    border-radius: 16px;
-    background: rgb(1, 4, 64);
-    background: linear-gradient(90deg, rgba(1, 4, 64, 1) 4%, rgba(20, 1, 130, 1) 24%, rgba(39, 5, 185, 0.9535962877030162) 51%, rgba(0, 104, 255, 1) 75%, rgba(5, 145, 184, 1) 93%);
-    z-index: 1;
-    opacity: 0.4;
-}
-
-.center_div::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    clip-path: polygon(20% 0%, 100% 0, 100% 20%, 100% 100%, 84% 70%, 46% 59%, 35% 21%, 0 0);
-    border-radius: 16px;
-    background-image: url('https://i.imgur.com/78E4ZIk.png');
+    background-image: url("images/bg.png");
     background-size: cover;
-    z-index: 1;
-    opacity: 0.4;
-}
-
-.center_div .top_div {
+    padding: 25px;
+    border-radius: 28px;
+    max-width: 380px;
     width: 100%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+header,
+.logo {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+}
+
+.logo img {
+    width: 48px;
+    margin-right: 10px;
+}
+
+h5 {
+    font-size: 16px;
+    font-weight: 400;
     color: #fff;
-    z-index: 2;
 }
 
-.center_div .top_div h2 {
-    font-size: 14px;
-    letter-spacing: 2px;
-    font-weight: 300;
-    z-index: 2;
+header .chip {
+    width: 60px;
 }
 
-.center_div .top_div h1 {
-    font-size: 30px;
-    text-align: right;
-    text-transform: uppercase;
-    z-index: 2;
+h6 {
+    color: #fff;
+    font-size: 10px;
+    font-weight: 400;
 }
 
-.center_div .bottom_div {
-    position: absolute;
-    bottom: 20px;
-    z-index: 2;
-}
-
-.center_div .bottom_div h2 {
-    font-size: 15px;
-    font-weight: 300;
-    text-transform: capitalize;
-    color: #dfe6e9;
-    margin-bottom: 5px;
+h5.number {
+    margin-top: 4px;
+    font-size: 18px;
     letter-spacing: 1px;
 }
 
-.center_div .bottom_div p {
-    color: #fff;
+h5.name {
+    margin-top: 20px;
+}
+
+.container1 .card-details {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .profile {

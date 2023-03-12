@@ -6,6 +6,8 @@ import { BsFillMicMuteFill } from 'react-icons/bs';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import numberToWords from 'number-to-words';
 import jwt_decode from 'jwt-decode';
+import Chip from './images/chip.png'
+import Logo from './images/logo.png'
 import { useNavigate } from 'react-router-dom';
 const UserPage = () => {
     const navigate = useNavigate();
@@ -258,7 +260,27 @@ const UserPage = () => {
                                 <p id="balance">Rs {balance}</p>
                                 <p id="capital">{numberToWords.toWords(balance)} Rupees</p>
                             </section>
-                            <div className="center_div">
+                            <div className="container1">
+                                <header>
+                                    <span className="logo">
+                                        <img src={Logo} alt="" />
+                                        <h5>Master Card</h5>
+                                    </span>
+                                    <img src={Chip} alt="" className="chip" />
+                                </header>
+                                <div className="card-details">
+                                    <div className="name-number">
+                                        <h6>Card Number</h6>
+                                        <h5 className="number">{profile[0].card.replace(/-/g, "  -  ")}</h5>
+                                        <h5 className="name">{profile[0].name}</h5>
+                                    </div>
+                                    <div className="valid-date">
+                                        <h6>Valid Thru</h6>
+                                        <h5>05/28</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div className="center_div">
                                 <div className="top_div">
                                     <h2>Credit </h2>
                                     <h1> visa </h1>
@@ -268,7 +290,7 @@ const UserPage = () => {
                                     <h2>{profile[0].name}</h2>
                                     <p>{profile[0].card.replace(/-/g, "  -  ")}</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <section class="table-responsive" id="table">
