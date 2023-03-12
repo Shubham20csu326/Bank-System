@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const User = require('../models/user')
+const Transaction = require('../models/user')
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 var ObjectId = require('mongoose').Types.ObjectId;
@@ -43,15 +44,34 @@ router.post('/login', (req, res) => {
     })
 })
 router.put('/editbalance/:id', (req, res) => {
-    var data = {
+    const data = {
         balance: req.body.balance
-    }
-    User.findByIdAndUpdate(req.params.id, { $set: data }).then(() => {
-        res.json({ success: true, message: "Balance Updated" })
-    }).catch((err) => {
-        console.log(err)
+    };
+    var date = new Date();
+    var formattedDate = date.toLocaleDateString('en-GB');
+    User.findById(req.params.id).then((value) => {
+        User.findByIdAndUpdate(req.params.id, { $set: data }).then(() => {
+            var ob = {
+                date: formattedDate,
+                amount: Math.abs(value.balance - req.body.balance),
+                updatedBalance: req.body.balance,
+                type: req.body.type
+            }
+            User.findByIdAndUpdate(req.params.id, { $push: { transactions: ob } }).then(() => {
+                res.json({ success: true, message: "History Stored" })
+            }).catch((error) => {
+                console.log(errpr)
+            })
+        }).catch((err) => {
+            console.log(err);
+            res.json({ success: false, message: "Error Updating Balance" });
+        });
+    }).catch((error) => {
+        console.log(error)
     })
-})
+
+});
+
 router.post('/register', (req, res) => {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         const data = new User({
@@ -60,7 +80,8 @@ router.post('/register', (req, res) => {
             password: hash,
             account: req.body.account,
             balance: req.body.balance,
-            card: generateRandomNumber()
+            card: generateRandomNumber(),
+            email: req.body.email
         })
 
         data.save().then(() => {
@@ -104,6 +125,25 @@ router.post('/transaction', async (req, res) => {
         sender.balance -= amount;
         recipient.balance += amount;
 
+        var date = new Date();
+        var formattedDate = date.toLocaleDateString('en-GB');
+        var senderTransaction = {
+            date: formattedDate,
+            amount: amount,
+            updatedBalance: sender.balance,
+            type: "debit",
+            account: recipientAccount
+        }
+        var recipientTransaction = {
+            date: formattedDate,
+            amount: amount,
+            updatedBalance: recipient.balance,
+            type: "credit",
+            account: senderAccount
+        }
+        sender.transactions.push(senderTransaction);
+        recipient.transactions.push(recipientTransaction);
+
         await sender.save();
         await recipient.save();
 
@@ -111,6 +151,35 @@ router.post('/transaction', async (req, res) => {
     } catch (error) {
         res.json({ success: false, message: error.message });
     }
+});
+
+router.put('/editbalance/:id', (req, res) => {
+    const data = {
+        balance: req.body.balance
+    };
+    var date = new Date();
+    var formattedDate = date.toLocaleDateString('en-GB');
+    User.findById(req.params.id).then((value) => {
+        User.findByIdAndUpdate(req.params.id, { $set: data }).then(() => {
+            var ob = {
+                date: formattedDate,
+                amount: Math.abs(value.balance - req.body.balance),
+                updatedBalance: req.body.balance,
+                type: req.body.type
+            }
+            User.findByIdAndUpdate(req.params.id, { $push: { transactions: ob } }).then(() => {
+                res.json({ success: true, message: "History Stored" })
+            }).catch((error) => {
+                console.log(error)
+            })
+        }).catch((err) => {
+            console.log(err);
+            res.json({ success: false, message: "Error Updating Balance" });
+        });
+    }).catch((error) => {
+        console.log(error)
+    })
+
 });
 router.post('/checkemail', (req, res) => {
     const email = req.body.email;

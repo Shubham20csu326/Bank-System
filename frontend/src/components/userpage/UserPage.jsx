@@ -17,6 +17,7 @@ const UserPage = () => {
     const [sender, setSender] = useState("")
     const [reciever, setReciever] = useState("")
     const [amount, setAmount] = useState(0);
+    const [transaction, setTransaction] = useState([])
 
     const loadProfile = async () => {
         const token = localStorage.getItem('token');
@@ -26,18 +27,19 @@ const UserPage = () => {
         setBalance(res.data.value.balance)
         setId(res.data.value._id)
         setSender(res.data.value.account)
+        setTransaction(res.data.value.transactions)
     };
 
     useEffect(() => {
-
         loadProfile();
-    }, []);
+    }, [transaction]);
 
     const depositbutton = async () => {
 
         const dbalance = balance + parseInt(deposit);
         var data = {
             balance: dbalance,
+            type: "credit"
         };
         let res = await axios.put('http://localhost:8080/auth/editbalance/' + id, data);
         if (res.data.success) {
@@ -51,6 +53,7 @@ const UserPage = () => {
             const newBalance = balance - parseInt(withdraw);
             var data = {
                 balance: newBalance,
+                type: "debit"
             };
             let res = await axios.put('http://localhost:8080/auth/editbalance/' + id, data);
             if (res.data.success) {
@@ -200,8 +203,11 @@ const UserPage = () => {
 
 
                 <div className="container">
-
+                    <div className="transcript">
+                        <p className="text-center">{transcript}</p>
+                    </div>
                     <div className="microphone-btn" >
+
                         {listening ? <AiOutlineAudio size={30} /> : <BsFillMicMuteFill size={30} />}
                     </div>
                     <div className="row">
@@ -265,7 +271,46 @@ const UserPage = () => {
                             </div>
                         </div>
                     </div>
-                    <p className="text-center">{transcript}</p>
+                    <section class="table-responsive" id="table">
+                        <table className="table align-middle mb-0 bg-white">
+                            <thead className="bg-light">
+                                <tr id="heading">
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Balance</th>
+                                    <th>Type</th>
+                                    <th>Account Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {transaction.reverse().map((curr) => {
+                                    return <tr>
+                                        <td>
+                                            <div className="d-flex align-items-center">
+                                                <div className="ms-3">
+                                                    <p className="fw-bold mb-1">{curr.date}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p className="fw-normal mb-1">{curr.amount}</p>
+                                        </td>
+                                        <td>
+                                            <p className="fw-normal mb-1">{curr.updatedBalance}</p>
+                                        </td>
+                                        {curr.type == "credit" ?
+                                            <td><span className="badge badge-primary rounded-pill d-inline">{curr.type}</span></td> :
+                                            <td><span className="badge badge-success rounded-pill d-inline">{curr.type}</span></td>}
+                                        <td>
+                                            {curr.account ? curr.account : "----"}
+                                        </td>
+                                    </tr>
+                                })}
+
+                            </tbody>
+                        </table>
+                    </section>
+
                 </div>
 
             }

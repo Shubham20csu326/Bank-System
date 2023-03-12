@@ -142,9 +142,20 @@ img#card {
     right: 20px;
 }
 
+.transcript {
+    position: absolute;
+    top: 15px;
+    right: 500px;
+}
+
 .input-area {
     display: flex;
     justify-content: space-evenly;
+}
+
+tr#heading {
+    background-color: #598efe;
+    color: white;
 }
 
 input.form-control#user {
@@ -153,6 +164,10 @@ input.form-control#user {
 
 input.form-control#amount {
     width: 100%;
+}
+
+section#table {
+    height: 20rem;
 }
 
 form#user {

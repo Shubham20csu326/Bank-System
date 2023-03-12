@@ -7,6 +7,7 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     balance: { type: Number, required: true },
     card: { type: String, required: true },
-    email: { type: String }
+    email: { type: String },
+    transactions: { type: Array }
 })
 module.exports = mongoose.model('User', userSchema)
