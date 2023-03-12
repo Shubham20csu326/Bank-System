@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "name": "bankingproject",
+    "builds": [{ "src": "app.js", "use": "@vercel/node" }],
+    "routes": [{ "src": "/(.*)", "dest": "/app.js" }]
+  }
