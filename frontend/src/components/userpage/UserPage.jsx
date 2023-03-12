@@ -24,7 +24,7 @@ const UserPage = () => {
     const loadProfile = async () => {
         const token = localStorage.getItem('token');
         const dtoken = jwt_decode(token);
-        let res = await axios.post('http://localhost:8080/auth/getuser/' + dtoken.userId);
+        let res = await axios.post('https://bankingproject.vercel.app/auth/getuser/' + dtoken.userId);
         setProfile([res.data.value])
         setBalance(res.data.value.balance)
         setId(res.data.value._id)
@@ -43,7 +43,7 @@ const UserPage = () => {
             balance: dbalance,
             type: "credit"
         };
-        let res = await axios.put('http://localhost:8080/auth/editbalance/' + id, data);
+        let res = await axios.put('https://bankingproject.vercel.app/auth/editbalance/' + id, data);
         if (res.data.success) {
             setBalance(dbalance);
             setDeposit(0);
@@ -57,7 +57,7 @@ const UserPage = () => {
                 balance: newBalance,
                 type: "debit"
             };
-            let res = await axios.put('http://localhost:8080/auth/editbalance/' + id, data);
+            let res = await axios.put('https://bankingproject.vercel.app/auth/editbalance/' + id, data);
             if (res.data.success) {
                 setBalance(newBalance);
                 setWithdraw(0);
@@ -116,7 +116,6 @@ const UserPage = () => {
         {
             command: 'logout',
             callback: () => {
-                console.log("logout")
                 localStorage.clear();
                 navigate("/")
             },
@@ -141,7 +140,6 @@ const UserPage = () => {
         {
             command: 'okay transfer',
             callback: () => {
-                console.log("t")
                 tranferbutton()
                 speak(`Amount Transferred`)
             },
@@ -183,13 +181,13 @@ const UserPage = () => {
             "recipientAccount": reciever,
             "amount": amount
         }
-        let res = await axios.post('http://localhost:8080/auth/transaction', data)
+        let res = await axios.post('https://bankingproject.vercel.app/auth/transaction', data)
         if (res.data.success) {
             setSender("")
             setReciever("")
             setAmount(0)
             console.log(res.data.message)
-            let d = await axios.post('http://localhost:8080/auth/getuser/' + id);
+            let d = await axios.post('https://bankingproject.vercel.app/auth/getuser/' + id);
             setBalance(d.data.value.balance)
         }
         else {

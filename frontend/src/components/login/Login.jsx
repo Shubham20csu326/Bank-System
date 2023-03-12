@@ -85,7 +85,7 @@ const Login = () => {
             account: account,
             password: password.replace(/\s+/g, '')
         }
-        const res = await axios.post('http://localhost:8080/auth/login', data);
+        const res = await axios.post('https://bankingproject.vercel.app/auth/login', data);
         if (res.data.success) {
             localStorage.setItem('token', res.data.token);
 
@@ -106,8 +106,7 @@ const Login = () => {
         var data = {
             "email": value
         }
-        console.log(data)
-        let res = await axios.post('http://localhost:8080/auth/checkemail', data)
+        let res = await axios.post('https://bankingproject.vercel.app/auth/checkemail', data)
         if (res.data.success) {
             console.log(res.data.message)
             localStorage.setItem('token', res.data.token);
